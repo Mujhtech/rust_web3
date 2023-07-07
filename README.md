@@ -206,7 +206,7 @@ cargo run --color=always --package celo_web3 --bin celo_web3
 
 The run your program, we can easily see that we have been able to interact seamlessly with our deployed smart contract.
 
-![image|690x147](./screenshot-6.jpeg)
+![image|690x147](./screenshot-6.png)
 
 ## About the Author
 
