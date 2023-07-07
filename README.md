@@ -1,3 +1,18 @@
+# Table of Content
+- [Introduction](#introduction)
+     - [How it works](#how-it-works)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Setup the Smart Contract](#setup-the-smart-contract)
+     - [Deploy Smart contract (Remix)](#deploy-smart-contract-remix)
+- [Rust Implementation](#rust-implementation)
+     - [Directory Structure](#directory-structure)
+     - [Rust Implmentation](#rust-implementation-1)
+     - [Run your Project](#run-your-project)
+- [About the Author](#about-the-author)
+- [References](#references)
+    
+
 ## Introduction
 
 In this tutorial, we'll go over the fundamentals of interacting with Solidity smart contract programming language using web3. You will have a fundamental understanding of how to make a contract call in the rust programming language.
