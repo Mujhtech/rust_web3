@@ -147,7 +147,7 @@ Now that your contract is compiled, you can deploy your smart contract to the ne
 - Choose Injected Web3 as your environment.
 - [Connect MetaMask to Celo](https://medium.com/@Celo_Academy/3-simple-steps-to-connect-your-metamask-wallet-to-celo-732d4a139587) testnet and verify the network.
 
-![image|690x341](./screenshot-2.jpeg)
+![image|690x341](./screenshot-2.png)
 
 ## Rust Implementation
 
