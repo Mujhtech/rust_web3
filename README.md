@@ -1,18 +1,33 @@
-## Introduction
+# Getting Started with Celo Blockchain using Rust Programming Language:
 
-In this tutorial, we'll go over the fundamentals of interacting with Solidity smart contract programming language using web3. You will have a fundamental understanding of how to make a contract call in the rust programming language.
+## Introduction:
 
-This tutorial will demonstrate how simple it is to interact with smart contracts, call functions, and listen to events in rust.
+In this tutorial, we'll go over the fundamentals of interacting with [Solidity](https://docs.soliditylang.org/en/v0.8.20/) [Smart Contract](https://www.ibm.com/topics/smart-contracts) programming language using [WEB3](https://crates.io/crates/web3). By the end of this tutorial, you will have a fundamental understanding of how to make a contract call in the [Rust](https://www.rust-lang.org/learn) Programming Language.
 
-### How it works
+This tutorial will demonstrate how simple it is to interact with Smart Contracts, call functions and listen to events in [Rust](https://www.rust-lang.org/learn).
 
-Web3 Package is a pretty cool crate package that let you deploy, interact with any blockchain network.
+## Table of Contents:
 
-## Prerequisites
+- [Getting Started with Celo Blockchain using Rust Programming Language](#getting-started-with-celo-blockchain-using-rust-programming-language)
+  - [Introduction](#introduction)
+  - [Pre-requisites](#pre-requisites)
+  - [How it works?](#how-it-works-?)
+  - [Getting Started!](#getting-started-!)
+  - [Setup the Smart Contract](#setup-the-smart-contract)
+      - [Deploy Smart contract using Remix IDE](#deploy-smart-contract-using-remix-ide)
+  - [Rust Implementation](#rust-implementation)
+      - [Directory Structure](#directory-structure)
+      - [Rust Implmentation](#rust-implementation-1)
+      - [Run your Project](#run-your-project)
+- [Conclusion](#conclusion)
+- [About the Author](#about-the-author)
+- [References](#references)
 
-First, This tutorial assumes that you are already familiar with solidity and understand how smart contracts work and also assumes that you already know the basics of using rust language.
+## Pre-requisites:
 
-For this project we'll be using a few interesting dependencies:
+First, this tutorial assumes that you are already familiar with Solidity and understand how Smart Contracts works and that you already know the basics of using [Rust](https://www.rust-lang.org/learn) Language.
+
+For this project we'll be using a few dependencies:
 
 - [tokio](https://crates.io/crates/tokio)
 - [web3](https://crates.io/crates/web3)
@@ -20,15 +35,19 @@ For this project we'll be using a few interesting dependencies:
 
 ![image|333x499](./screenshot-1.jpeg)
 
-## Getting Started
+## How it works? -
 
-I assume anyone going through this tutorial already understands and uses Rust, so I will skip the setup involved in getting Rust to work on your development computer. That means I assume you already have VS Code/Intellij Idea/Eclipse/Atom and Rust setup on your PC.
+[WEB3](https://crates.io/crates/web3) package is a crate package that lets you to deploy, interact with any blockchain network.
 
-If you are entirely new to Rust, here ( [https://www.rust-lang.org/learn/get-started](https://www.rust-lang.org/learn/get-started) ) is a good tutorial you can learn from or make use of online rust playground ([https://play.rust-lang.org/](https://play.rust-lang.org/)).
+## Getting Started! :
 
-## Setup the Smart Contract
+I assume anyone going through this tutorial already understands and uses [Rust](https://www.rust-lang.org/learn), so I will skip the setup involved in getting Rust to work on your development computer. That means I assume you already have [VS Code](https://code.visualstudio.com/)/[Intellij Idea](https://www.jetbrains.com/idea/download/?section=windows)/[Eclipse](https://www.eclipse.org/downloads/)/[Atom](https://atom.en.softonic.com/download) and Rust setup on your PC.
 
-The next step is to compile our smart contract using the solidity compiler of your choice, such as hardhat, truffle, or any other solidity compiler.
+If you are entirely new to Rust, here ( [https://www.rust-lang.org/learn/get-started](https://www.rust-lang.org/learn/get-started) ) is a good tutorial you can learn from or make use of online Rust playground ([https://play.rust-lang.org/](https://play.rust-lang.org/)).
+
+## Set up the Smart Contract:
+
+The next step is to compile our Smart Contract using the Solidity compiler of your choice, such as [Hardhat](https://hardhat.org/), [Truffle](https://trufflesuite.com/docs/truffle/how-to/install/) or any other Solidity compiler.
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -43,13 +62,13 @@ contract TicTacToeV1 {
         uint256 win;
     }
 
-    uint32 private idCounter;
+    uint32 private idCounter; // Counter for assigning unique IDs to leaderboards
 
-    mapping(uint256 => LeaderBoard) internal leaderboards;
+    mapping(uint256 => LeaderBoard) internal leaderboards; // Mapping to store leaderboards
 
     function start(uint256 win) public {
-        leaderboards[idCounter] = LeaderBoard(msg.sender, win);
-        idCounter++;
+        leaderboards[idCounter] = LeaderBoard(msg.sender, win); // Create a new leaderboard with the sender's address and specified win count
+        idCounter++; // Increment the counter for the next leaderboard
     }
 
     function getLeaderboard(uint256 _index)
@@ -57,23 +76,28 @@ contract TicTacToeV1 {
         view
         returns (address player, uint256)
     {
-        LeaderBoard storage leaderboard = leaderboards[_index];
-        return (leaderboard.player, leaderboard.win);
+        require(_index < idCounter, "Invalid leaderboard index"); // Ensure the provided index is within the range of existing leaderboards
+        
+        LeaderBoard storage leaderboard = leaderboards[_index]; // Retrieve the specified leaderboard
+        return (leaderboard.player, leaderboard.win); // Return the player's address and win count
     }
 
     function updateLeaderboard(uint256 index) public {
-        leaderboards[index].win++;
+        require(index < idCounter, "Invalid leaderboard index"); // Ensure the provided index is within the range of existing leaderboards
+        
+        leaderboards[index].win++; // Increment the win count of the specified leaderboard
     }
 
     function getLeaderboardLength() public view returns (uint256) {
-        return (idCounter);
+        return idCounter; // Return the total number of leaderboards created
     }
 }
+
 ```
 
-### Deploy Smart contract (Remix)
+### Deploy Smart contract using Remix:
 
-Now that your contract is compiled, you can deploy your smart contract to the network. You can deploy to any Ethereum compatible network, and in this case we’ll be deploying the Celo testnet or mainnnet depending on your preference. If you’re brand new to this stick with testnet!
+Now that your contract is compiled, you can deploy your Smart Contract to the network. You can deploy to any Ethereum compatible network, and in this case we’ll be deploying the Celo testnet or mainnnet depending on your preference. If you’re brand new to this stick with testnet!
 
 - Click the Deploy and Run Transactions Icon on the left side menu.
 - Choose Injected Web3 as your environment.
@@ -81,15 +105,15 @@ Now that your contract is compiled, you can deploy your smart contract to the ne
 
 ![image|690x341](./screenshot-2.jpeg)
 
-## Rust Implementation
+## Rust Implementation:
 
-### Directory structure
+### Directory structure:
 
 ![image|568x499](./screenshot-3.jpeg)
 
 Let’s copy our Contract ABIs into our project.
 
-Then create a folder in the project folder directory lib and create a file named tictactoev1.abi.json.
+Then, create a folder in the project folder directory "lib" and create a file named "tictactoev1.abi.json".
 
 ![image|690x365](./screenshot-4.jpeg)
 
@@ -161,7 +185,7 @@ Then create a folder in the project folder directory lib and create a file named
 ];
 ```
 
-### Rust Implementation
+### Rust Implementation:
 
 ![image|690x296](./screenshot-5.jpeg)
 
@@ -194,25 +218,28 @@ async fn main() {
 }
 ```
 
-In this example, we first set up a transport for the celo network using the transport Http struct method from web3. We then create a new web3 instance from the http transport we created. We then define the ABI and address of the smart contract we want to interact with. We use the Contract struct from web3 to connect to the contract, and then call a function on the contract using the query/call method. Finally, we get the result of the function call and print it out.
+In this example, we first set up a transport for the celo network using the transport Http struct method from Web3. We then create a new Web3 instance from the "http transport" we created. We then define the ABI and address of the Smart Contract we want to interact with. We use the Contract struct from web3 to connect to the contract and then call a function on the contract using the query/call method. Finally, we get the result of the function call and print it out.
 
-Note that you'll need to replace the **_contracts/tictactoe.abi.json_** and **_contract_address_** values with the actual ABI and address of the smart contract you want to interact with. You can generate the ABI using a tool like abigen or solc, and you can get the contract address from a blockchain explorer or by deploying the contract yourself.
+Note that you'll need to replace the **_contracts/tictactoe.abi.json_** and **_contract_address_** values with the actual ABI and address of the Smart Contract you want to interact with. You can generate the ABI using a tool like abigen or solc, and you can get the contract address from a blockchain explorer or by deploying the contract yourself.
 
+### Run your project:
 
-### Run your project
 ```bash
 cargo run --color=always --package celo_web3 --bin celo_web3
 ```
-
-The run your program, we can easily see that we have been able to interact seamlessly with our deployed smart contract.
+The run your program, we can easily see that we have been able to interact seamlessly with our deployed Smart Contract.
 
 ![image|690x147](./screenshot-6.png)
 
-## About the Author
+## Conclusion: 
 
-I am a Software Engineer, Tech Evangelist (Preaching the gospel of flutter & blockchain) also and Ex-GDSC Leads.
+Therefore, getting started with Celo Blockchain using the Rust programming language opens up exciting possibilities for developers. Rust's strong emphasis on safety, performance and concurrency makes it an excellent choice for building secure and efficient applications on the Celo Blockchain. By following the necessary steps and leveraging the available resources, developers can quickly gain the knowledge and skills required to dive into Celo Blockchain development with Rust. This combination empowers developers to explore the world of decentralized finance, mobile applications and other innovative solutions within the Celo ecosystem. With its growing popularity and active community, embarking on this journey promises a rewarding and promising future in blockchain development.
 
-## References
+## About the Author:
+
+I am a Software Engineer, Tech Evangelist (Preaching the gospel of flutter & blockchain) and Ex-GDSC Leads.
+
+## References:
 
 - [Github Repo](https://github.com/Mujhtech/rust_web3)
 - [Tokio crate package](https://crates.io/crates/tokio)
