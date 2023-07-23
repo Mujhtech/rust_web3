@@ -1,6 +1,6 @@
 ## Introduction
 
-In this tutorial, we'll go over the fundamentals of interacting with Solidity smart contract programming language using web3. You will have a fundamental understanding of how to make a contract call in the rust programming language.
+Blockchain technology has revolutionized the way we interact with digital assets and decentralized applications (DApps). Rust, a systems programming language known for its safety and efficiency, offers a compelling option for building blockchain applications. In this article, we will explore a Rust-based application that interacts with a smart contract deployed on the Celo blockchain network. Specifically, we will delve into the code snippet provided, which demonstrates how to connect to and query a Tic-Tac-Toe smart contract deployed on the Celo testnet.
 
 This tutorial will demonstrate how simple it is to interact with smart contracts, call functions, and listen to events in rust.
 
@@ -79,7 +79,7 @@ Now that your contract is compiled, you can deploy your smart contract to the ne
 - Choose Injected Web3 as your environment.
 - [Connect MetaMask to Celo](https://medium.com/@Celo_Academy/3-simple-steps-to-connect-your-metamask-wallet-to-celo-732d4a139587) testnet and verify the network.
 
-![image|690x341](./screenshot-2.jpeg)
+![image|690x341](./screenshot-2.png)
 
 ## Rust Implementation
 
