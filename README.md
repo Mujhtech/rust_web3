@@ -18,9 +18,9 @@ Celo Testnet Account: To interact with the Celo blockchain, you'll need a Celo T
 
 Project Dependencies: For this project, we'll be using a few interesting dependencies to interact with the Celo blockchain.
 
-- [tokio](https://crates.io/crates/tokio)
-- [web3](https://crates.io/crates/web3)
-- [ethers](https://crates.io/crates/ethers)
+- [tokio](https://crates.io/crates/tokio): Tokio is a popular asynchronous runtime for Rust, designed to help developers build efficient and scalable applications with asynchronous I/O. It enables writing non-blocking, concurrent code that can handle many I/O operations efficiently without being blocked by waiting for them to complete.
+- [web3](https://crates.io/crates/web3):  Ethereum JSON-RPC multi-transport client. Rust implementation of Web3.js library.
+- [ethers](https://crates.io/crates/ethers):  allows developers to interact with the Ethereum blockchain, handle Ethereum transactions, interact with smart contracts, and manage Ethereum accounts and keys.
 
 ![image|333x499](./screenshot-1.jpeg)
 
@@ -166,11 +166,16 @@ Keep in mind that this contract does not implement the actual logic for playing 
 
 ### Deploy Smart contract (Remix)
 
-Now that your contract is compiled, you can deploy your smart contract to the network. You can deploy to any Ethereum-compatible network, and in this case, we’ll be deploying the Celo Testnet or Mainnnet depending on your preference. If you’re brand new to this stick with Testnet!
+Remix provides an integrated Solidity compiler. Click on the "Solidity Compiler" tab in the left-hand sidebar, and select the correct compiler version for your contract. Then, click on the "Compile" button to compile your smart contract code. Make sure there are no compilation errors.
+
+Now that your contract is compiled, you can deploy your smart contract to the network. You can deploy to any Ethereum-compatible network, and in this case, we’ll be deploying the Celo Testnet or Mainnnet depending on your preference. If you’re new to this stick with Testnet!
 
 - Click the Deploy and Run Transactions Icon on the left side menu.
 - Choose Injected Web3 as your environment.
-- [Connect MetaMask to Celo](https://medium.com/@Celo_Academy/3-simple-steps-to-connect-your-metamask-wallet-to-celo-732d4a139587) testnet and verify the network.
+- [Connect MetaMask to Celo](https://medium.com/@Celo_Academy/3-simple-steps-to-connect-your-metamask-wallet-to-celo-732d4a139587) testnet and verify the network. After connecting your wallet, you should see a "Deploy" section in the Remix editor. Ensure that your selected contract is the one you want to deploy. Click on the "Deploy" button to initiate the deployment process.
+- Confirm Transaction: Depending on the wallet you're using, you may need to confirm the transaction to deploy the smart contract. Follow the prompts on your wallet interface to confirm the deployment.
+- Wait for Deployment: The deployment process may take a few moments, especially if you're using a testnet with longer block times. You can monitor the transaction status on your wallet or the Remix interface.
+- Get Contract Address: Once the deployment is successful, you'll receive the transaction receipt, which includes the contract address. This address represents the location of your smart contract on the Ethereum blockchain.
 
 ![image|690x341](./screenshot-2.png)
 
