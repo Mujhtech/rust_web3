@@ -1,3 +1,18 @@
+# Table of Content
+- [Introduction](#introduction)
+     - [How it works](#how-it-works)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Setup the Smart Contract](#setup-the-smart-contract)
+     - [Deploy Smart contract (Remix)](#deploy-smart-contract-remix)
+- [Rust Implementation](#rust-implementation)
+     - [Directory Structure](#directory-structure)
+     - [Rust Implmentation](#rust-implementation-1)
+     - [Run your Project](#run-your-project)
+- [About the Author](#about-the-author)
+- [References](#references)
+    
+
 ## Introduction
 
 Blockchain technology has revolutionized the way we interact with digital assets and decentralized applications (DApps). Rust, a systems programming language known for its safety and efficiency, offers a compelling option for building blockchain applications. In this article, we will explore a Rust-based application that interacts with a smart contract deployed on the Celo blockchain network. Specifically, we will delve into the code snippet provided, which demonstrates how to connect to and query a Tic-Tac-Toe smart contract deployed on the Celo Testnet.
@@ -39,36 +54,89 @@ The next step is to compile our smart contract using the solidity compiler of yo
 
 // TicTacToeV1
 
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.20;
 
+
+
+/**
+
+@title TicTacToeV1
+@dev This contract represents a Tic-Tac-Toe leaderboard system.
+Players can start a game by calling the start function and passing the number of wins they have.
+The player's address and win count are stored in the leaderboards array.
+The contract provides functions to retrieve leaderboard information and update the win count.
+*/
 contract TicTacToeV1 {
-    struct LeaderBoard {
+
+    /**
+    * @dev Struct representing a leaderboard entry.
+    * @param player The address of the player.
+    * @param win The number of wins for the player.
+    */
+    struct LeaderboardEntry  {
         address player;
         uint256 win;
     }
 
     uint32 private idCounter;
 
-    mapping(uint256 => LeaderBoard) internal leaderboards;
+    LeaderboardEntry[] private leaderboards;
 
+    /**
+    * @dev Event emitted when a game is started.
+    * @param player The player's address who started the game.
+    * @param winCount The number of wins the player has.
+    */
+    event GameStarted(address player, uint256 winCount);
+
+    /**
+    * @dev Event emitted when a leaderboard entry is updated.
+    * @param index The index of the leaderboard entry being updated.
+    * @param newWinCount The updated win count for the leaderboard entry.
+    */
+    event LeaderboardUpdated(uint256 index, uint256 newWinCount);
+
+    /**
+    * @dev Start a game by adding a player to the leaderboard.
+    * @param win The number of wins the player has.
+    */
     function start(uint256 win) public {
-        leaderboards[idCounter] = LeaderBoard(msg.sender, win);
+        require(win > 0, "Invalid win count");
+        leaderboards.push(LeaderboardEntry(msg.sender, win));
         idCounter++;
+        emit GameStarted(msg.sender, win);
     }
 
+
+    /**
+    * @dev Retrieve player and win count for a given leaderboard index.
+    * @param _index The index of the leaderboard entry to retrieve.
+    * @return player The player's address.
+    * @return playerwin The player's win count.
+    */
     function getLeaderboard(uint256 _index)
         public
         view
-        returns (address player, uint256)
+        returns (address player, uint256 playerwin)
     {
-        LeaderBoard storage leaderboard = leaderboards[_index];
+        require(_index < idCounter, "Invalid leaderboard index");
+        LeaderboardEntry storage leaderboard = leaderboards[_index];
         return (leaderboard.player, leaderboard.win);
     }
 
+    /**
+    * @dev Update the win count of a specific leaderboard entry.
+    * @param index The index of the leaderboard entry to update.
+    */
     function updateLeaderboard(uint256 index) public {
         leaderboards[index].win++;
+        emit LeaderboardUpdated(index, leaderboards[index].win);
     }
 
+    /**
+    * @dev Get the length of the leaderboard array.
+    * @return The length of the leaderboard array.
+    */
     function getLeaderboardLength() public view returns (uint256) {
         return (idCounter);
     }
